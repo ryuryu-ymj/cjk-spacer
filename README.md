@@ -7,10 +7,12 @@ A package to improve spacing between characters when typesetting Japanese (CJK) 
 
 * 和文を途中で改行した場合にスペースを入れない．\
   Prevents adding spaces when a Japanese text line breaks in the middle.
+
   ![](examples/comparison1.svg)
 
 * 数式と和文の間のスペースを自動で挿入．\
   Automatically inserts spaces between mathematical formulas and Japanese text.
+
   ![](examples/comparison2.svg)
 
 
@@ -38,10 +40,12 @@ If you wish to use other languages, please configure it as follows.
 ## 制限事項 Limitations
 半角のコンマやピリオドなどの句読点の後に改行し和文を続けた場合，間にスペースが入りません． \
 If you break a line after a half-width punctuation mark (like a comma or period) and follow it with Japanese text, a space will not be inserted.
+
 ![](examples/comparison3.svg)
 
 和文との接続には全角の句読点を使うようにしてください． \
 Please use full-width punctuation marks to connect with Japanese text.
+
 ![](examples/comparison4.svg)
 
 ## 別の手段 Alternative methods
@@ -56,6 +60,7 @@ Please use full-width punctuation marks to connect with Japanese text.
   cjk-unbreak recursively traverses the Typst document AST to remove spaces before and after Japanese text, so some elements are not yet supported.
   (For example, the `terms` function. See the comments on [Typstの「改行すると半角スペース入ってしまう問題」について ](https://note.com/bismuth083/n/n4f0300d3c1cf) for details.)
   On the other hand, cjk-spacer uses a method that defines a show rule to add zero-width spaces before and after Japanese text for the `text` function, so it affects all `text` elements.
+
   ![](examples/cjk-unbreak-comparison1.svg)
 
 * [Typstで和文と数式の間の空きをどうにかしたい話](https://qiita.com/zr_tex8r/items/a9d82669881d8442b574):
