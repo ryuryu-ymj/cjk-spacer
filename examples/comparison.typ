@@ -3,6 +3,8 @@
 #codly(lang-format: none)
 
 #set text(lang: "ja", font: "Noto Serif JP")
+#show math.equation: set text(font: ("New Computer Modern Math", "Noto Serif JP"))
+
 #show raw: set text(font: ("DejaVu Sans Mono", "Noto Sans JP"))
 #set page(width: 16cm, height: auto, margin: 2mm, fill: white)
 #show table.cell.where(y: 0): it => {
@@ -16,10 +18,14 @@
 
 #let compare(source) = {
   table(
-    columns: (1fr, 1fr, 1fr),
+    // columns: (1fr, 1fr, 1fr),
     rows: auto,
     align: center + horizon,
-    table.header([Example code], [Output (default)], [Output (cjk-spacer)]),
+    table.header(
+      [Example code],
+      [Output (default)],
+      [Output (cjk-spacer)],
+    ),
     {
       source
     },
@@ -29,6 +35,7 @@
   )
 }
 
+#set table(columns: (1fr, 1fr, 1fr))
 #compare(```typst
 こんにちは
 世界
@@ -41,20 +48,26 @@
 #pagebreak()
 
 #compare(```typst
-hello, // 半角コンマ
-世界
+タイプスト(Typst)で遊ぶ
 ```)
 #pagebreak()
 
-#compare(```typst
-hello， // 全角コンマ
-世界
-```)
+#[
+  #set table(columns: (1.6fr, 1fr, 1fr))
+  #compare(```typst
+  $
+    x^2 >= 0 "ただし" x "は実数" \
+    x^2 >= 0 #[ただし $x$ は実数] \
+    x^2 >= 0 #box[ただし$x$は実数]
+  $
+  ```)
+]
 #pagebreak()
 
+#set table(columns: (1.9fr, 1fr, 1fr))
 #compare(```typst
-/ 用語: #[
-    説明の途中で
-    改行
-  ]
+*太字！* の後の空白
+
+#show "^": h(0.25em, weak: true)
+*太字！*^の後の空白
 ```)

@@ -11,9 +11,14 @@ A package to improve spacing between characters when typesetting Japanese (CJK) 
   ![Comparison showing the removal of unwanted spaces caused by source code line breaks in Japanese text.](examples/comparison1.svg)
 
 * 数式と和文の間のスペースを自動で挿入．\
-  Automatically inserts spaces between mathematical formulas and Japanese text.
+  Automatically inserts spaces between mathematical expressions and Japanese text.
 
-  ![Comparison showing automatic spacing insertion between Japanese text and inline mathematical formulas.](examples/comparison2.svg)
+  ![Comparison showing automatic spacing insertion between Japanese text and mathematical expressions.](examples/comparison2.svg)
+
+* 半角約物と和文の間のスペースを自動で挿入．\
+  Automatically inserts spaces between western punctuation marks and Japanese text.
+
+  ![Comparison showing automatic spacing insertion between Japanese text and western parentheses.](examples/comparison3.svg)
 
 
 ## 使い方 Usage
@@ -23,30 +28,24 @@ Add the following lines to the beginning of your document.
 The show rule definition is only needed once per document.
 
 ```typst
-#import "@preview/cjk-spacer:0.1.0": cjk-spacer
+#import "@preview/cjk-spacer:0.2.0": cjk-spacer
 #show: cjk-spacer
-```
-
-デフォルトでは言語が日本語 `"ja"` に設定されているので，他の言語を使う際は，以下のように設定してください．\
-The default language is set to Japanese ("ja").
-If you wish to use other languages, please configure it as follows.
-
-```typst
-#import "@preview/cjk-spacer:0.1.0": cjk-spacer
-#show: cjk-spacer.with(lang: "zh")
 ```
 
 
 ## 制限事項 Limitations
-半角のコンマやピリオドなどの句読点の後に改行し和文を続けた場合，間にスペースが入りません． \
-If you break a line after a half-width punctuation mark (like a comma or period) and follow it with Japanese text, a space will not be inserted.
+数式内の和文テキストと数式の間に関しては自動スペースがうまく機能しません．その場合，`box` 関数でテキストを囲むようにしてください．\
+Automatic spacing does not work well between Japanese text inside an equation and the equation itself.
+In such cases, please wrap the text in a `box` function.
 
-![Example showing a limitation where space is missing when a line break follows a half-width punctuation mark.](examples/comparison3.svg)
+![](examples/comparison4.svg)
 
-和文との接続には全角の句読点を使うようにしてください． \
-Please use full-width punctuation marks to connect with Japanese text.
+和文と他の element（太字など）の和文との間に明示的に半角スペースを入れることができません．もし多用する場合は四分空きのコマンドを定義すると便利でしょう．\
+It is not possible to explicitly insert a half-width space between Japanese text and other styled Japanese text elements (e.g., bold text).
+If you need this frequently, it may be useful to define a command for a quarter-em space.
 
-![Example showing correct spacing when using full-width punctuation marks.](examples/comparison4.svg)
+![](examples/comparison5.svg)
+
 
 ## 別の手段 Alternative methods
 
@@ -67,3 +66,13 @@ Please use full-width punctuation marks to connect with Japanese text.
   和文と数式の間のスペース問題に関する詳細な記事．cjk-spacer とは別の解決策も提示されてるが，外部フォントが必要である．
   \
   A detailed article on the spacing issue between Japanese text and mathematical expressions. It presents other solutions besides cjk-spacer, but they require some external font.
+
+
+## 変更履歴 Change logs
+
+* v0.2.0:
+  - 和文と半角約物の間にスペースを自動で挿入する機能を追加．\
+    Added a feature to automatically insert spaces between Japanese text and western punctuation marks.
+  - `lang` パラメータの廃止．\
+    Removed the `lang` parameter.
+* v0.1.0: Initial release.
