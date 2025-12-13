@@ -38,13 +38,13 @@ The show rule definition is only needed once per document.
 Automatic spacing does not work well between Japanese text inside an equation and the equation itself.
 In such cases, please wrap the text in a `box` function.
 
-![](examples/comparison4.svg)
+![Comparison showing the spacing limitation inside equations and the box workaround.](examples/comparison4.svg)
 
 和文と他の element（太字など）の和文との間に明示的に半角スペースを入れることができません．もし多用する場合は四分空きのコマンドを定義すると便利でしょう．\
 It is not possible to explicitly insert a half-width space between Japanese text and other styled Japanese text elements (e.g., bold text).
 If you need this frequently, it may be useful to define a command for a quarter-em space.
 
-![](examples/comparison5.svg)
+![Comparison showing the spacing limitation after strong Japanese text and a custom spacer workaround.](examples/comparison5.svg)
 
 
 ## 別の手段 Alternative methods
