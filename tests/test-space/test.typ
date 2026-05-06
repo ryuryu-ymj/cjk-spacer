@@ -1,7 +1,7 @@
 #import "/src/lib.typ": cjk-spacer
 
 #set text(lang: "ja", font: "Noto Sans JP")
-#show math.equation: set text(font: ("New Computer Modern Math", "Noto Serif JP"))
+#show math.equation: set text(font: ("New Computer Modern Math", "Noto Sans JP"))
 #show: cjk-spacer
 
 #let test(expected, actual) = {

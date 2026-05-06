@@ -28,7 +28,7 @@ Add the following lines to the beginning of your document.
 The show rule definition is only needed once per document.
 
 ```typst
-#import "@preview/cjk-spacer:0.2.0": cjk-spacer
+#import "@preview/cjk-spacer:0.2.1": cjk-spacer
 #show: cjk-spacer
 ```
 
@@ -40,8 +40,9 @@ In such cases, please wrap the text in a `box` function.
 
 ![Comparison showing the spacing limitation inside equations and the box workaround.](examples/comparison4.svg)
 
-和文と他の element（太字など）の和文との間に明示的に半角スペースを入れることができません．もし多用する場合は四分空きのコマンドを定義すると便利でしょう．\
+和文と他の element（太字など）の和文との間に明示的に半角スペースを入れることができません．代わりに空白文字`#" "`を挿入してください．多用する場合は四分空きのコマンドを定義すると便利でしょう．\
 It is not possible to explicitly insert a half-width space between Japanese text and other styled Japanese text elements (e.g., bold text).
+Instead, please insert a space character `#" "`.
 If you need this frequently, it may be useful to define a command for a quarter-em space.
 
 ![Comparison showing the spacing limitation after strong Japanese text and a custom spacer workaround.](examples/comparison5.svg)
@@ -51,16 +52,10 @@ If you need this frequently, it may be useful to define a command for a quarter-
 
 * [cjk-unbreak](https://typst.app/universe/package/cjk-unbreak):
   和文（CJK文）の途中で改行した場合の間のスペースを除去するパッケージ．cjk-spacer の１つ目の機能と挙動はほぼ同じだが，実装方法が異なる．
-  cjk-unbreak は Typst の文書 AST を再帰的に探査して，和文の前後のスペースを除去していくので，一部未だ対応していない要素がある．
-  （例えば，`terms` 関数．詳しくは [Typstの「改行すると半角スペース入ってしまう問題」について ](https://note.com/bismuth083/n/n4f0300d3c1cf) のコメントを参照．）
-  一方，cjk-spacer は `text` 関数に対して和文の前後にゼロスペースを追加する show rule を定義する方式なので，すべての `text` に対して作用する．
+  cjk-unbreak は Typst の文書 AST を再帰的に探査して，和文の前後のスペースを除去していくという方式である．一方，cjk-spacer は `text` 関数に対して和文の前後にゼロスペースを追加する show rule を定義する方式である．
   \
   A package that removes spaces inserted when a Japanese (CJK) text line breaks in the middle. Its behavior for the first feature is almost the same as cjk-spacer, but the implementation is different.
-  cjk-unbreak recursively traverses the Typst document AST to remove spaces before and after Japanese text, so some elements are not yet supported.
-  (For example, the `terms` function. See the comments on [Typstの「改行すると半角スペース入ってしまう問題」について ](https://note.com/bismuth083/n/n4f0300d3c1cf) for details.)
-  On the other hand, cjk-spacer uses a method that defines a show rule to add zero-width spaces before and after Japanese text for the `text` function, so it affects all `text` elements.
-
-  ![Comparison table demonstrating that cjk-spacer correctly removes unwanted spaces even within term lists, a case where cjk-unbreak currently fails.](examples/cjk-unbreak-comparison1.svg)
+  cjk-unbreak recursively traverses the Typst document AST to remove spaces before and after Japanese text. On the other hand, cjk-spacer defines a show rule to add zero-width spaces before and after Japanese text for the `text` function.
 
 * [Typstで和文と数式の間の空きをどうにかしたい話](https://qiita.com/zr_tex8r/items/a9d82669881d8442b574):
   和文と数式の間のスペース問題に関する詳細な記事．cjk-spacer とは別の解決策も提示されてるが，外部フォントが必要である．
@@ -70,6 +65,9 @@ If you need this frequently, it may be useful to define a command for a quarter-
 
 ## 変更履歴 Change logs
 
+* v0.2.1:
+  - show rule の再帰呼び出しが上限回数を超える問題を修正．\
+    Fixed an issue where the show rule recursion exceeded the maximum depth.
 * v0.2.0:
   - 和文と半角約物の間にスペースを自動で挿入する機能を追加．\
     Added a feature to automatically insert spaces between Japanese text and western punctuation marks.

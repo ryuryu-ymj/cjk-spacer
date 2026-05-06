@@ -65,27 +65,24 @@
       return it
     }
 
-    let op-match = it.text.matches(western-open-punc-regex).last(default: none)
-    if op-match != none and op-match.start > 0 {
-      let text1 = text(it.text.slice(0, op-match.start))
-      let text2 = text(it.text.slice(op-match.start))
-      return text1 + text2
-    }
-    let cp-match = it.text.match(western-close-punc-regex)
-    if cp-match != none and cp-match.end < it.text.len() {
-      let text1 = text(it.text.slice(0, cp-match.end))
-      let text2 = text(it.text.slice(cp-match.end))
-      return text1 + text2
+    let op-matches = it.text.matches(western-open-punc-regex)
+    let cp-matches = it.text.matches(western-close-punc-regex)
+    let matches = op-matches.map(m => m.start) + cp-matches.map(m => m.end)
+    matches.push(0)
+    matches.push(it.text.len())
+    matches = matches.dedup().sorted()
+    if matches.len() > 2 {
+      return matches.windows(2).map(m => text(it.text.slice(m.at(0), m.at(1)))).sum()
     }
 
-    let pre = if op-match != none {
+    let pre = if op-matches.len() > 0 {
       // Insert latin ghost character before western opening punctuasion marks.
       pre-latin-ghost
     } else if it.text.starts-with(cjk-regex) {
       // Remove spaces after text that start with cjk character.
       h(0em, weak: true)
     }
-    let post = if cp-match != none {
+    let post = if cp-matches.len() > 0 {
       // Insert latin ghost character after western closing punctuasion marks.
       post-latin-ghost
     } else if it.text.ends-with(cjk-regex) {

@@ -66,8 +66,8 @@
 
 #set table(columns: (1.9fr, 1fr, 1fr))
 #compare(```typst
-*太字！* の後の空白
-
+*太字* の後の空白 \
+*太字*#" "の後の空白 \
 #show "^": h(0.25em, weak: true)
-*太字！*^の後の空白
+*太字*^の後の空白
 ```)
